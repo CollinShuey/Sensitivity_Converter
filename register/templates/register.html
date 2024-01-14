@@ -1,0 +1,15 @@
+{% extends '/Users/collinshuey/Desktop/Sens_Django/Sensitivity_Converter/register/templates/base_reg.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content%}
+
+    
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <button style="margin-top:10px;" type='submit' class="btn btn-success">Register</button>
+    </form>
+    
+
+{% endblock %}

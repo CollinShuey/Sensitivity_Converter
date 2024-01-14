@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "style2.css" %}">
+    <title>eDPI Calculator</title>
+</head>
+<body>
+    <nav>
+        <form action="{% url 'edpi_calculator' %}" method="get">
+            <button class ='unstyled-button'>Edpi Converter</button>
+        </form> 
+        <form action="{% url 'index' %}" method="get">
+            <button class="unstyled-button">Sensitivity Converter</button>
+        </form>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="unstyled-button" type="submit" >Logout</button>
+            </form>
+        {% else %}
+            <form method="get" action="{% url 'login' %}">
+                <button class="unstyled-button">Login</button>
+            </form>
+        {% endif %}
+    </nav>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h1>eDPI Calculator</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    
+                    <label for="currentSensitivity">Current Sensitivity:</label>
+                    <input name="current_sens" type="text" class="box" id="currentSensitivity" placeholder="Enter current game sens" min="0">
+                
+                    <label for="currentDPI">Current DPI:</label>
+                    <input name="current_dpi" type="text" id="currentDPI" placeholder="Enter current DPI" min="0">
+                    <button type="submit">Generate eDPI</button>
+            
+                </div>
+            </form>
+        </div>
+        <div class="new-Sensitivity">
+            
+            
+            {% if edpi %}
+                <h2 class = 'text' style="font-size: 200%;">Calculated eDPI</h2>
+                <p class = 'text' style="font-size: 150%;">Effective Dots per Inch: {{edpi}}</p>
+            {% endif %}
+
+        </div>
+    {% else %}
+        <div class="not-authenticated">
+            <p>Please login first <a href="/login">Here</a>!</p>
+            <br>
+            <p>Not registered yet? <a href="/register">Register</a></p>
+        <div>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "style2.css" %}">
+    <title>Game Sensitivity Converter</title>
+    
+</head>
+<body>
+    <nav>
+        <form action="{% url 'edpi_calculator' %}" method="get">
+            <button class ='unstyled-button'>Edpi Converter</button>
+        </form> 
+        <form action="{% url 'index' %}" method="get">
+            <button class="unstyled-button">Sensitivity Converter</button>
+        </form>    
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="unstyled-button" type="submit" >Logout</button>
+            </form>
+        {% else %}
+            <form method="get" action="{% url 'login' %}">
+                <button class="unstyled-button">Login</button>
+            </form>
+        {% endif %}
+    </nav>
+    {% if user.is_authenticated %}
+        <div class="container">
+            
+            <h1>Game Sensitivity Converter</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="newGameSensitivity">Convert From:</label>
+                    <select name="game" placeholder="Select game" style="height: 35px; font-family: Arial;">
+                        <option hidden>Select game</option>
+                        <option value="Apex Legends">Apex Legends</option>
+                        <option value="COD">COD: Warzone</option>
+                        <option value="Counter-Strike 2">Counter-Strike 2</option>
+                        <option value="Destiny 2">Destiny 2</option>
+                        <option value="Overwatch 2">Overwatch 2</option> 
+                        <option value="Rainbow 6">Rainbow 6 Siege</option>
+                        <option value="VALORANT">VALORANT</option>
+                        <option value="style" style="display: none;">fdafdsafdsafdsafdafdsafdhh</option> 
+                    </select>
+
+                
+                    <label for="currentSensitivity">Current Sensitivity:</label>
+                    <input name="current_sens" type="text" class="box" id="currentSensitivity" placeholder="Enter current game sens" min="0" value="{{ request.POST.current_sens }}">
+                
+                    <label for="currentDPI">Current DPI:</label>
+                    <input name="current_dpi" type="text" id="currentDPI" placeholder="Enter current DPI" min="0">
+                    <button type="submit">Generate List</button>
+            
+                </div>
+            </form>
+        </div>
+        <div class="new-Sensitivity">
+            {% if all_sens%}
+                <h2 class ='text' style="font-size: 200%;">Converted Sensitivities</h2>
+                <ul>
+                    {% for game,sens in all_sens.items %}
+                        <li id='no' class="Game-sens">{{game}}: {{sens}}</li>
+                    {% endfor %}
+                </ul>
+
+                <form method='post' action="{% url "download_sensitivities"%}">
+                    {% csrf_token %}
+                    {% for game,sens in all_sens.items%}
+                        <input type='hidden' name='all_sens' value="{{game}}:{{sens}}">
+                    {% endfor %}
+                    <button class = 'text' style="font-size: 100%;" type='submit'>Download Your Sensitivity Spreadsheet</button>
+                </form>
+            {% endif %}
+            
+
+        </div>
+    {% else %}
+        <div class="not-authenticated">
+            <p>Please login first <a href="/login">Here</a>!</p>
+            <br>
+            <p>Not registered yet? <a href="/register">Register</a></p>
+        <div>
+    {% endif %}
+    
+
+</body>
+</html>
