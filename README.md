@@ -1,8 +1,8 @@
 // Description: Developed a web application using the Python framework, Django, that allows users to translate a sensitivity they are comfortable with in one game to every other game supported by the app .Implemented the core features employing Django templates and endpoints to establish a robust foundation for the app, while continuing to implement features such as an eDPI calculator and, using Pandas, an option for users to download their converted sensitivities to a spreadsheet to have it all in one place easily accessible. Created a secure authentication system using Django forms, allowing users to login and logout seamlessly, with access control mechanisms to ensure only authenticated users see or are able to use certain data/features .Collaborating with a co-developer to create a responsive design that optimizes the application’s performance across different devices for a clean and simple user experience
 
 // If you want to use this yourself you will need to install the following...
-# django
-# django-crispy-forms
+1. Django
+2. django-crispy-forms
 
 // Also please keep in mind all the files I gitignored. You will need to set up the settings.py file yourself and your installed apps should include the following...
 
